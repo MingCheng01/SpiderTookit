@@ -1,6 +1,6 @@
 import random
 
-ua_list={
+ua_list = {
     "chrome": [
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36",
         "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML like Gecko) Chrome/44.0.2403.155 Safari/537.36",
@@ -263,6 +263,7 @@ ua_list={
     ]
 }
 
+
 def random_ua(
         factory: str = 'random'
 ):
@@ -272,11 +273,11 @@ def random_ua(
         return random.choice(ua_list['chrome'])
     elif factory == 'firefox':
         return random.choice(ua_list['firefox'])
-    elif factory=='safari':
+    elif factory == 'safari':
         return random.choice(ua_list['safari'])
-    elif factory=='opera':
+    elif factory == 'opera':
         return random.choice(ua_list['opera'])
-    elif factory=='ie':
+    elif factory == 'ie':
         return random.choice(ua_list['ie'])
     else:
         pass

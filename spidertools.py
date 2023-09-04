@@ -1,13 +1,29 @@
-from .tools import Download_byte
-from .tools import Download_m3u8
-from .tools import Open_js
-from .tools import Save
-from .tools import Random_ua
-from .filtering import Download_byte_parameter_filtering
-from .filtering import Download_m3u8_parameter_filtering
-from .filtering import Open_js_parameter_filtering
-from .filtering import Save_parameter_filtering
-from .filtering import Random_ua_parameter_filtering
+from .tools.download import Download_byte
+from .tools.download import Download_m3u8
+from .tools.open import Open_js
+from .tools.save import Save_csv
+from .tools.save import Save_xlsx
+from .tools.save import Save_mysql
+from .tools.save import Save_redis
+from .tools.save import Save_mongo
+from .tools.random import Random_ua
+from .tools.enc_dec import Md5
+from .tools.enc_dec import Base64
+from .tools.enc_dec import Sha
+#from .tools.enc_dec import Rsa
+from .tools.time import Timestamp
+from .filtering.download_filtering import Download_byte_parameter_filtering
+from .filtering.download_filtering import Download_m3u8_parameter_filtering
+from .filtering.open_filtering import Open_js_parameter_filtering
+from .filtering.save_filtering import Save_csv_parameter_filtering
+from .filtering.save_filtering import Save_xlsx_parameter_filtering
+from .filtering.save_filtering import Save_mysql_parameter_filtering
+from .filtering.save_filtering import Save_redis_parameter_filtering
+from .filtering.save_filtering import Save_mongo_parameter_filtering
+from .filtering.random_filtering import Random_ua_parameter_filtering
+from .filtering.enc_dec_filtering import Md5_parameter_filtering
+from .filtering.enc_dec_filtering import Base64_parameter_filtering
+from .filtering.enc_dec_filtering import Sha_parameter_filtering
 
 
 # byte下载器_class
@@ -132,23 +148,6 @@ def donwload_byte_function(
     path_ = path_.replace('\\', '/')
     if path_[-1] != '/':
         path_ += '/'
-    if name == '':
-        try:
-            if '?' in url:
-                name = url.split('?')[0].split('/')[-1].split('.')[0]
-            else:
-                name = url.split('/')[-1].split('.')[0]
-        except:
-            raise '尝试切割url命名失败，请手动设置名称'
-    if type_ == '':
-        try:
-            if '?' in url:
-                type_ = url.split('?')[0].split('/')[-1].split('.')[1]
-            else:
-                type_ = url.split('/')[-1].split('.')[1]
-        except:
-            raise '尝试切割type文件类型失败，请手动设置名称'
-
     if Download_byte_parameter_filtering.donwload_byte_function_filtering(
             url=url,
             headers=headers,
@@ -227,7 +226,7 @@ def save_to_csv(
     if '.csv' not in file_name:
         file_name = file_name + '.csv'
 
-    if Save_parameter_filtering.save_to_csv_filtering(
+    if Save_csv_parameter_filtering.save_to_csv_filtering(
             path_=path_,
             file_name=file_name,
             data=data,
@@ -236,13 +235,13 @@ def save_to_csv(
             errors=errors,
             newline=newline
     ):
-        Save.save_to_csv(path_=path_,
-                         file_name=file_name,
-                         data=data,
-                         mode=mode,
-                         encoding=encoding,
-                         errors=errors,
-                         newline=newline)
+        Save_csv.save_to_csv(path_=path_,
+                             file_name=file_name,
+                             data=data,
+                             mode=mode,
+                             encoding=encoding,
+                             errors=errors,
+                             newline=newline)
         return 'ok'
     else:
         pass
@@ -276,7 +275,7 @@ def save_to_xlsx(
     if '.xlsx' not in file_name:
         file_name = file_name + '.xlsx'
 
-    if Save_parameter_filtering.save_to_xlsx_filtering(
+    if Save_xlsx_parameter_filtering.save_to_xlsx_filtering(
             path_=path_,
             file_name=file_name,
             data=data,
@@ -286,7 +285,7 @@ def save_to_xlsx(
             header=header,
             index=index
     ):
-        Save.save_to_xlsx(
+        Save_xlsx.save_to_xlsx(
             path_=path_,
             file_name=file_name,
             data=data,
@@ -319,7 +318,7 @@ def save_to_mysql(
         :param charset: 编码
         :return: save_to_mysql的对象,用完记得.close
     '''
-    if Save_parameter_filtering.save_to_mysql_filtering(
+    if Save_mysql_parameter_filtering.save_to_mysql_filtering(
             host=host,
             port=port,
             user=user,
@@ -327,7 +326,7 @@ def save_to_mysql(
             database=database,
             charset=charset
     ):
-        return Save.save_to_mysql(
+        return Save_mysql.save_to_mysql(
             host=host,
             port=port,
             user=user,
@@ -355,14 +354,14 @@ def save_to_redis(
         :param pool_size: 连接池大小
         :return: save_to_redis的对象,用完记得.close
     '''
-    if Save_parameter_filtering.save_to_redis_filtering(
+    if Save_redis_parameter_filtering.save_to_redis_filtering(
             host=host,
             port=port,
             database=database,
             password=password,
             pool_size=pool_size
     ):
-        return Save.save_to_redis(
+        return Save_redis.save_to_redis(
             host=host,
             port=port,
             database=database,
@@ -393,7 +392,7 @@ def save_to_mongo(
         :param collection: collection
         :return: save_to_mongo的对象,用完记得.close
     '''
-    if Save_parameter_filtering.save_to_mongo_filtering(
+    if Save_mongo_parameter_filtering.save_to_mongo_filtering(
             host=host,
             port=port,
             database=database,
@@ -402,7 +401,7 @@ def save_to_mongo(
             pool_size=pool_size,
             collection=collection
     ):
-        return Save.save_to_mongo(
+        return Save_mongo.save_to_mongo(
             host=host,
             port=port,
             database=database,
@@ -427,5 +426,85 @@ def random_ua(
             factory=factory
     ):
         return Random_ua.random_ua(factory=factory)
+    else:
+        pass
+
+
+def timestamp10():
+    return Timestamp.timestamp10()
+
+
+def timestamp13():
+    return Timestamp.timestamp13()
+
+
+def md5_encrypt(text, encode='utf-8'):
+    '''
+       :param text: 加密文本
+       :param encode: 编码
+       :return: 加密数据
+   '''
+    if Md5_parameter_filtering.md5_filtering(text):
+        return Md5.md5_encrypt(text, encode)
+    else:
+        pass
+
+
+def base64_encrypt(text, encode='utf-8'):
+    '''
+        :param text: 加密文本
+        :param encode: 编码
+        :return: 加密数据
+    '''
+    if Base64_parameter_filtering.base64_filtering(text):
+        return Base64.base64_encrypt(text, encode)
+    else:
+        pass
+
+
+def base64_decrypt(text, encode='utf-8'):
+    '''
+        :param text: 解密文本
+        :param encode: 编码
+        :return: 解密数据
+    '''
+    if Base64_parameter_filtering.base64_filtering(text):
+        return Base64.base64_decrypt(text, encode)
+    else:
+        pass
+
+
+def sha1_encrypt(text, encode='utf-8'):
+    '''
+       :param text: 加密文本
+       :param encode: 编码
+       :return: 加密数据
+   '''
+    if Sha_parameter_filtering.sha_filtering(text):
+        return Sha.sha1_encrypt(text, encode)
+    else:
+        pass
+
+
+def sha256_encrypt(text, encode='utf-8'):
+    '''
+       :param text: 加密文本
+       :param encode: 编码
+       :return: 加密数据
+   '''
+    if Sha_parameter_filtering.sha_filtering(text):
+        return Sha.sha256_encrypt(text, encode)
+    else:
+        pass
+
+
+def sha512_encrypt(text, encode='utf-8'):
+    '''
+       :param text: 加密文本
+       :param encode: 编码
+       :return: 加密数据
+   '''
+    if Sha_parameter_filtering.sha_filtering(text):
+        return Sha.sha512_encrypt(text, encode)
     else:
         pass

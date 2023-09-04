@@ -151,6 +151,7 @@ class download_byte():
         # 休眠
         time.sleep(self.Time_Sleep)
 
+    # 参数分发
     def distribution_param(self, param_):
         param_lens = len(param_)
         param_len = self.urls_len / param_lens
